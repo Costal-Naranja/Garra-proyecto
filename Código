@@ -1,0 +1,59 @@
+#include <Servo.h>  // Incluir la biblioteca Servo
+
+Servo servo1, servo2, servo3, servo4;  // Crear cuatro objetos Servo
+int potPin1 = A0, potPin2 = A1, potPin3 = A2, potPin4 = A3;  // Pines de los potenciómetros
+int potValue1, potValue2, potValue3, potValue4;  // Variables para almacenar los valores de los potenciómetros
+int servoPin1 = 9, servoPin2 = 10, servoPin3 = 11, servoPin4 = 12;  // Pines de los servos
+
+void setup() {
+  // Conectar los servos a sus respectivos pines
+  servo1.attach(servoPin1);
+  servo2.attach(servoPin2);
+  servo3.attach(servoPin3);
+  servo4.attach(servoPin4);
+  
+  Serial.begin(9600);  // Iniciar la comunicación serie para depuración
+}
+
+void loop() {
+  // Leer cada valor del potenciómetro (0-1023)
+  potValue1 = analogRead(potPin1);
+  potValue2 = analogRead(potPin2);
+  potValue3 = analogRead(potPin3);
+  potValue4 = analogRead(potPin4);
+  
+  // Mapear los valores del potenciómetro a ángulos del servo (0-180 grados)
+  int angle1 = map(potValue1, 0, 1023, 0, 180);
+  int angle2 = map(potValue2, 0, 1023, 0, 180);
+  int angle3 = map(potValue3, 0, 1023, 0, 180);
+  int angle4 = map(potValue4, 0, 1023, 0, 180);
+  
+  // Mover cada servo al ángulo correspondiente
+  servo1.write(angle1);
+  servo2.write(angle2);
+  servo3.write(angle3);
+  servo4.write(angle4);
+  
+  // (Opcional) Imprimir valores para depuración
+  Serial.print("Pot1: ");
+  Serial.print(potValue1);
+  Serial.print(" - Ángulo Servo1: ");
+  Serial.println(angle1);
+  
+  Serial.print("Pot2: ");
+  Serial.print(potValue2);
+  Serial.print(" - Ángulo Servo2: ");
+  Serial.println(angle2);
+
+  Serial.print("Pot3: ");
+  Serial.print(potValue3);
+  Serial.print(" - Ángulo Servo3: ");
+  Serial.println(angle3);
+
+  Serial.print("Pot4: ");
+  Serial.print(potValue4);
+  Serial.print(" - Ángulo Servo4: ");
+  Serial.println(angle4);
+  
+  delay(15);  // Pequeña demora para evitar temblores
+}
